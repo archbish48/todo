@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Session Test</title>
+</head>
+<body>
+
+<h1>Session Test</h1>
+
+<button onclick="login()">Login</button>
+<button onclick="check()">Check Session</button>
+
+<script>
+  function login() {
+    fetch('http://localhost:8080/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: 'testuser',
+        password: 'test1234'
+      }),
+      credentials: 'include'  // ⭐ 세션 쿠키 자동 포함
+    }).then(response => {
+      console.log('Login:', response.status);
+    });
+  }
+
+  function check() {
+    fetch('http://localhost:8080/auth/check', {
+      method: 'GET',
+      credentials: 'include'  // ⭐ 세션 쿠키 자동 포함
+    }).then(response => response.text())
+            .then(text => console.log('Check:', text));
+  }
+</script>
+
+</body>
+</html>

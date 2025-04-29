@@ -15,18 +15,27 @@ public class Todo {
     private Long id;
 
     private String text;
-
     private boolean liked;
-
     private LocalDate date;
 
-    //  기본 생성자 (JPA용)
-    public Todo() {}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public Todo(String text, boolean liked, LocalDate date) {
+    //  기본 생성자 추가
+    public Todo(String text, boolean liked, LocalDate  date, User user) {
         this.text = text;
         this.liked = liked;
         this.date = date;
+        this.user = user;
+    }
+
+    // JPA 용 기본 생성자
+    protected Todo() {}
+
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
     }
 
 }
